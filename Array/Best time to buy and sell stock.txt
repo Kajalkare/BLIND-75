@@ -1,0 +1,55 @@
+Best time to buy and sell stock
+
+Approach 1 - Brute force 
+- two loops
+T.C = O(n*n)	S.C = O(1)
+
+int maxProfit(vector<int>& arr) {
+	int n = arr.size();     int ans = 0;
+	for(int i=0; i<n; i++)
+	{
+		for(int j=i+1; j<n; j++)
+		{
+			ans = max(ans, arr[j]-arr[i]);
+		}
+	}
+	return ans;
+}
+
+-----------------------------------------------------------------------------------------------------
+
+Approach 2 - prefix array
+T.C = O(2n)		S.C = O(n)
+
+int maxProfit(vector<int>& arr) {
+	int n = arr.size();
+	vector<int>pre(n, 0);  
+	pre[0] = arr[0];    
+	for(int i=1; i<n; i++)
+	{
+		pre[i] = min(pre[i-1], arr[i]);
+	}
+	int ans = 0;
+	for(int i=0; i<n; i++)
+	{
+		ans = max(ans, arr[i]-pre[i]);
+	}
+	return ans;
+}
+
+------------------------------------------------------------------------------------------------------
+
+Approach 3 - 	using 1 variable
+T.C = O(n)		S.C = O(1)
+
+int maxProfit(vector<int>& arr) {
+	int n = arr.size();
+	int min_value = INT_MAX; 
+	int ans = 0;
+	for(int i=0; i<n; i++)
+	{
+		ans = max(ans, arr[i]-min_value);
+		min_value = min(arr[i], min_value);
+	}
+	return ans;
+}

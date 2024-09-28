@@ -1,0 +1,46 @@
+Maximum Subarray
+
+Approach 1 - Brute force
+Genrate all subarray and find max sum
+T.C = O(n*n)	S.C = O(1)
+
+int maxSubArray(vector<int>& nums) {
+	int n = nums.size();
+	int ans = 0;
+	for(int i=0; i<n; i++)
+	{
+		int sum = 0;
+		for(int j=i; j<n; j++)
+		{
+			ans = max(ans, nums[j]);
+			sum += nums[j];
+			ans = max(ans, sum);
+		}
+	}
+	return ans;
+}
+
+
+Approach 2 - Kadane's algorithm
+T.C = O(n)		S.C  = O(1)
+
+int maxSubArray(vector<int>& nums) {
+	int n = nums.size();
+	int ans = 0;    int max_value = INT_MIN;
+	int sum = 0;
+	for(int i=0; i<n; i++)
+	{
+		max_value = max(max_value, nums[i]);
+		sum += nums[i];
+		if(sum <= 0)
+		{
+			sum = 0;
+		}
+		ans = max(ans, sum);
+	}
+	if(ans == 0)
+	{
+		return max_value;
+	}
+	return ans;
+}
