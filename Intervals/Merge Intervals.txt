@@ -1,0 +1,29 @@
+Merge Intervals
+
+Approach - track start and end 
+T.C = O(n)		S.C = O(1)
+
+vector<vector<int>> insert(vector<vector<int>>& arr, vector<int>& newI) {
+	int n = arr.size();
+	vector<vector<int>>ans;
+
+	int i = 0;
+	while(i < n && newI[0] > arr[i][1])
+	{
+		ans.push_back(arr[i]);
+		i++;
+	}
+	while(i < n && newI[1] >= arr[i][0])
+	{
+		newI[0] = min(newI[0], arr[i][0]);
+		newI[1] = max(newI[1], arr[i][1]);
+		i++;
+	}
+	ans.push_back(newI);
+	while(i < n)
+	{
+		ans.push_back(arr[i]);
+		i++;
+	}
+	return ans;
+}

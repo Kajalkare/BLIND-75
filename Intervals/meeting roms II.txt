@@ -1,0 +1,56 @@
+using priority queue
+
+T.C = O(n)		S.C = O(n)
+
+int meetingRoomsII(vector<vector<int>>& arr)
+{
+	sort(arr.begin(), arr.end());
+	
+    priority_queue<int, vector<int>, greater<int>>pq;
+    int ans = 0;
+    for(int i=0; i<arr.size(); i++)
+    {
+        while(!pq.empty() && pq.top() < arr[i][0])
+        {
+            pq.pop();
+        }
+        pq.push(arr[i][1]);
+        ans = max(ans, pq.size());
+    }
+    return ans;
+}
+
+using sort
+
+T.C = O(nlogn)		S.C = O(n)
+
+int meetingRoomsII(vector<vector<int>>& arr)
+{
+    int n = nums.size();
+    vector<int>start(n, 0); vector<int>end(n, 0);
+    for(int i=0; i<n; i++)
+    {
+        start[i] = arr[i][0];
+    }
+    for(int i=0; i<n; i++)
+    {
+        end[i] = arr[i][1];
+    }
+    sort(start.begin(), start.end());
+    sort(end.begin(), end.end());
+    int ans = 0;
+    for(i < n && j < n)
+    {
+        if(start[i] < end[j])
+        {
+            room++;
+            i++;
+        }
+        else{
+            room--;
+            j++;
+        }
+        ans = max(ans, room);
+    }
+    return ans;
+}
