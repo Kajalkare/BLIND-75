@@ -1,0 +1,39 @@
+Reverse a linked list
+
+Approach 1 - Brute force
+- using another data structure array
+T.C = O(2*n)		S.C = O(n)	
+
+ListNode* reverseList(ListNode* head) {
+	vector<int>arr;
+	ListNode* curr = head;
+	while(curr)
+	{
+		arr.push_back(curr->val);
+		curr = curr->next;
+	}
+	
+	ListNode* curr1 = head;
+	for(int i = arr.size()-1; i>=0; i--)
+	{
+		curr1->val = arr[i];
+		curr1 = curr1->next;
+	}
+	return head;
+}
+------------------------------------------------------------------------------------------------------------------------
+Approach 2 - prev and next Pointers
+T.C = O(n)		S.C = O(n)
+
+ListNode* reverseList(ListNode* head) {
+	ListNode* prev = NULL;  ListNode* nextt;
+	ListNode* curr = head;
+	while(curr)
+	{
+		nextt = curr->next;
+		curr->next = prev;
+		prev = curr;
+		curr = nextt; 
+	}
+	return prev;
+}
