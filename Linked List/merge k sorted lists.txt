@@ -1,0 +1,87 @@
+merge k sorted lists
+
+Approach 1 - using merge algorithm
+
+T.C = O()		S.C = O(1)
+
+ListNode* merge(ListNode* list1, ListNode* list2)
+{
+	if(!list1)
+	{
+		return list2;
+	}
+	if(!list2)
+	{
+		return list1;
+	}
+	ListNode* dummyNode = new ListNode(0);
+	ListNode* res = dummyNode;
+
+	while(list1 && list2)
+	{
+		if(list1->val <= list2->val)
+		{
+			res->next = list1;
+			res = res->next;
+			list1 = list1->next;
+		}
+		else{
+			res->next = list2;
+			res = res->next;
+			list2 = list2->next;
+		}
+	}
+	while(list1)
+	{
+		res->next = list1;
+		res = res->next;
+		list1 = list1->next;
+	}
+	while(list2)
+	{
+		res->next = list2;
+		res = res->next;
+		list2 = list2->next;
+	}
+	return dummyNode->next;
+	return res;
+}
+
+ListNode* mergeKLists(vector<ListNode*>& lists) {
+	ListNode* newList = NULL;
+	for(int i=0; i<lists.size(); i++)
+	{
+		newList = merge(lists[i], newList);
+	}
+	return newList;
+}
+
+Approach 2 - Priority queue
+
+ListNode* mergeKLists(vector<ListNode*>& lists) {
+	priority_queue<pair<int, ListNode*>, vector<pair<int, ListNode*>>, greater<pair<int, ListNode*>>>pq;
+
+	for(int i=0; i<lists.size(); i++)
+	{
+		if(lists[i])
+		{
+			pq.push({lists[i]->val, lists[i]});
+		}
+	}
+	ListNode* dummy = new ListNode(0);
+	ListNode* res = dummy;
+
+	while(!pq.empty())
+	{
+		ListNode* node = pq.top().second;   
+		pq.pop();
+		res->next = node;
+		res = res->next;
+
+		if(node->next)
+		{
+			pq.push({node->next->val, node->next});
+		}
+	}
+	return dummy->next;
+}

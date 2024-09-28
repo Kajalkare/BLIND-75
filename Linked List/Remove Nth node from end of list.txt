@@ -1,0 +1,60 @@
+Remove nth node from end of list
+
+Approach 1 - Traverse the array and find length 
+T.C = O(2*n)	S.C = O(1)
+
+ListNode* removeNthFromEnd(ListNode* head, int n) {
+	int count = 0;  
+	ListNode* curr = head;
+
+	while(curr)
+	{
+		curr = curr->next;
+		count++;
+	}
+
+	int req = count-n;
+
+	if(req == 0)
+	{
+	return head->next;
+	}
+	ListNode* node = head;
+	int size = 0;
+	ListNode* prev = NULL;
+	while(node && size < req)
+	{
+		prev = node;
+		node = node->next;
+		size++;
+	}
+	prev->next = node->next;
+	return head;
+}
+
+----------------------------------------------------------------
+
+Approach 2 - using slow and fast pointer
+T.C = O(n)		S.C = O(1)
+
+ListNode* removeNthFromEnd(ListNode* head, int n) {
+	int count = 0;  ListNode* slow = head;  ListNode* fast = head;
+	while(count < n)
+	{
+		fast = fast->next;
+		count++;
+	}
+	if(!fast)
+	{
+		return head->next;
+	}
+	ListNode* prev = NULL;
+	while(fast)
+	{
+		prev = slow;
+		slow = slow->next;
+		fast = fast->next;
+	}
+	prev->next = slow->next;
+	return head;
+}

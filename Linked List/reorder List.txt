@@ -1,0 +1,66 @@
+Approach 1 - Brute force
+
+create a new array and push all elements to array 
+then arr[0] -> arr[n-1] ->arr[1]
+
+T.C = O(2*n)		S.C = O(n)
+
+-----------------------------------------------------------------------------------------------------------
+
+Aproach 2 - 
+- reverse the half linked list
+- same as merge 2 linked list
+
+T.C = O(2*n)	S.C = O(1)
+
+ListNode* reverseList(ListNode* head)
+{
+	ListNode* prev = NULL;  ListNode* nextt;
+	ListNode* curr = head;
+	while(curr)
+	{
+		nextt = curr->next;
+		curr->next = prev;
+		prev = curr;
+		curr = nextt; 
+	}
+	return prev;
+}
+
+
+void reorderList(ListNode* head) {
+	ListNode* slow = head;      ListNode* fast = head;
+	while(fast && fast->next)
+	{
+		slow = slow->next;
+		fast = fast->next->next;
+	}
+	ListNode* node1 = slow->next;
+	slow->next = NULL;
+	ListNode* l2 = reverseList(node1);
+	ListNode* l1 = head;
+	ListNode* dummyNode = new ListNode(0);
+	ListNode* res = dummyNode;
+	while(l1 && l2)
+	{
+		res->next = l1;
+		res = res->next;
+		l1 = l1->next;
+
+		res->next = l2;
+		res = res->next;
+		l2 = l2->next;
+	}
+	if(l1)
+	{
+		res->next = l1;
+		res = res->next;
+		l1 = l1->next;
+	}
+	if(l2)
+	{
+		res->next = l2;
+		res = res->next;
+		l2 = l2->next;
+	}
+}

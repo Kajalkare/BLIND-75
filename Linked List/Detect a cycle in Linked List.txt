@@ -1,0 +1,39 @@
+Detect a Cycle in Linked List
+
+Approach 1 - Hashmap
+T.C = O(n)	S.C = O(n)
+
+bool hasCycle(ListNode *head) {
+	unordered_map<ListNode*, int>mp;
+	ListNode* curr = head;
+
+	while(curr != NULL)
+	{
+		if(mp.find(curr) != mp.end())
+		{
+			return true;
+		}
+		mp[curr]++;
+		curr = curr->next;
+	}
+	return false;
+}
+
+Approach 2 - slow and fast pointer
+T.C = O(n)		S.C = O(1)
+
+bool hasCycle(ListNode *head) {
+	ListNode* slow = head;  
+	ListNode* fast = head;
+
+	while(fast && fast->next)
+	{
+		slow = slow->next;
+		fast = fast->next->next;
+		if(slow == fast)
+		{
+			return true;
+		}
+	}
+	return false;
+}
